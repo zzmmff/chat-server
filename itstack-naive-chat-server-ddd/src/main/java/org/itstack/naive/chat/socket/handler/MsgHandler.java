@@ -9,13 +9,12 @@ import org.itstack.naive.chat.infrastructure.common.SocketChannelUtil;
 import org.itstack.naive.chat.protocol.msg.MsgRequest;
 import org.itstack.naive.chat.protocol.msg.MsgResponse;
 import org.itstack.naive.chat.socket.MyBizHandler;
+import org.itstack.naive.chat.util.CacheUtil;
+
+import java.io.File;
 
 
 /**
- * 博  客：http://bugstack.cn
- * 公众号：bugstack虫洞栈 | 沉淀、分享、成长，让自己和他人都能有所收获！
- * create by 小傅哥 on @2020
- * <p>
  * 消息信息处理
  */
 public class MsgHandler extends MyBizHandler<MsgRequest> {
@@ -27,6 +26,10 @@ public class MsgHandler extends MyBizHandler<MsgRequest> {
     @Override
     public void channelRead(Channel channel, MsgRequest msg) {
         logger.info("消息信息处理：{}", JSON.toJSONString(msg));
+        if (2 == msg.getMsgType()) {  //文件消息，先暂时不不写入数据库，待上传完成后再写入
+            CacheUtil.fileUserMap.put(channel, new MsgRequest(msg.getUserId(), msg.getFriendId(), msg.getMsgText(), msg.getMsgType(), msg.getMsgDate()));
+            return;
+        }
         // 异步写库
         userService.asyncAppendChatRecord(new ChatRecordInfo(msg.getUserId(), msg.getFriendId(), msg.getMsgText(), msg.getMsgType(), msg.getMsgDate()));
         // 添加对话框[如果对方没有你的对话框则添加]

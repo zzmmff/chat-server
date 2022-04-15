@@ -28,7 +28,7 @@ public class SerializationUtil {
      * @param obj 对象
      * @return 字节数组
      */
-    public static <T> byte[] serialize(T obj) {
+    public static <T> byte[]  serialize(T obj) {
         Class<T> cls = (Class<T>) obj.getClass();
         LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
         try {

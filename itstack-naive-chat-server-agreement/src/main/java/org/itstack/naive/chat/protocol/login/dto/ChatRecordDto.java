@@ -12,7 +12,7 @@ public class ChatRecordDto {
     private String userHead;        // 用户头像[群组聊天]
     private Integer msgUserType;    // 消息类型[0自己/1好友]
     private String msgContent;      // 消息内容
-    private Integer msgType;        // 消息类型；0文字消息、1固定表情
+    private Integer msgType;        // 消息类型；0文字消息、1固定表情 2 文件
     private Date msgDate;           // 消息时间
 
     public String getTalkId() {

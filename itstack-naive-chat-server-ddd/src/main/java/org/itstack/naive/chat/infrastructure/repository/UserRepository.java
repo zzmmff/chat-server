@@ -15,9 +15,6 @@ import static org.itstack.naive.chat.infrastructure.common.Constants.TalkType.Fr
 import static org.itstack.naive.chat.infrastructure.common.Constants.TalkType.Group;
 
 /**
- * 博  客：http://bugstack.cn
- * 公众号：bugstack虫洞栈 | 沉淀、分享、成长，让自己和他人都能有所收获！
- * create by 小傅哥 on @2020
  */
 @Repository("userRepository")
 public class UserRepository implements IUserRepository {
@@ -34,6 +31,8 @@ public class UserRepository implements IUserRepository {
     private IUserFriendDao userFriendDao;
     @Autowired
     private IUserGroupDao userGroupDao;
+    @Autowired
+    private IFileRecordDao fileRecordDao;
 
     @Override
     public String queryUserPassword(String userId) {
@@ -155,10 +154,10 @@ public class UserRepository implements IUserRepository {
     public List<ChatRecordInfo> queryChatRecordInfoList(String talkId, String userId, Integer talkType) {
         List<ChatRecordInfo> chatRecordInfoList = new ArrayList<>();
         List<ChatRecord> list = new ArrayList<>();
-        if (Friend.getCode().equals(talkType)){
+        if (Friend.getCode().equals(talkType)) {
             list = chatRecordDao.queryUserChatRecordList(talkId, userId);
-        } else if (Group.getCode().equals(talkType)){
-            list =  chatRecordDao.queryGroupsChatRecordList(talkId, userId);
+        } else if (Group.getCode().equals(talkType)) {
+            list = chatRecordDao.queryGroupsChatRecordList(talkId, userId);
         }
         for (ChatRecord chatRecord : list) {
             ChatRecordInfo chatRecordInfo = new ChatRecordInfo();
@@ -185,6 +184,33 @@ public class UserRepository implements IUserRepository {
     @Override
     public List<String> queryTalkBoxGroupsIdList(String userId) {
         return talkBoxDao.queryTalkBoxGroupsIdList(userId);
+    }
+
+    @Override
+    public void appendFileRecord(FileRecordInfo fileRecordInfo) {
+        FileRecord fileRecord = new FileRecord();
+        fileRecord.setUserId(fileRecordInfo.getUserId());
+        fileRecord.setFriendId(fileRecordInfo.getFriendId());
+        fileRecord.setFileMD5(fileRecordInfo.getFileMD5());
+        fileRecord.setClientFilePath(fileRecordInfo.getClientFilePath());
+        fileRecord.setIsDelete(fileRecordInfo.getIsDelete());
+        fileRecord.setFilePath(fileRecordInfo.getFilePath());
+        fileRecord.setFileSize(fileRecordInfo.getFileSize());
+        fileRecordDao.appendFileRecord(fileRecord);
+    }
+
+    @Override
+    public FileRecordInfo queryFileRecord(String md5) {
+        FileRecord fileRecord = fileRecordDao.queryFileRecord(md5);
+        if (null == fileRecord) return null;
+        FileRecordInfo fileRecordInfo = new FileRecordInfo();
+        fileRecordInfo.setUserId(fileRecord.getUserId());
+        fileRecordInfo.setFriendId(fileRecord.getFriendId());
+        fileRecordInfo.setFileMD5(fileRecord.getFileMD5());
+        fileRecordInfo.setClientFilePath(fileRecord.getClientFilePath());
+        fileRecordInfo.setFilePath(fileRecord.getFilePath());
+        fileRecordInfo.setFileSize(fileRecord.getFileSize());
+        return fileRecordInfo;
     }
 
 }

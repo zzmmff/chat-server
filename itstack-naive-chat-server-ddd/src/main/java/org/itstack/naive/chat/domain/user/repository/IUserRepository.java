@@ -6,9 +6,7 @@ import org.itstack.naive.chat.infrastructure.po.UserFriend;
 import java.util.List;
 
 /**
- * 博  客：http://bugstack.cn
- * 公众号：bugstack虫洞栈 | 沉淀、分享、成长，让自己和他人都能有所收获！
- * create by 小傅哥 on @2020
+
  */
 public interface IUserRepository {
 
@@ -114,5 +112,19 @@ public interface IUserRepository {
      * @return       群组Id
      */
     List<String> queryTalkBoxGroupsIdList(String userId);
+
+
+    /**
+     *  插入文件记录表
+     * @param fileRecordInfo 文件记录
+     * */
+
+    void appendFileRecord(FileRecordInfo fileRecordInfo);
+
+    /**
+     * 查询文件记录
+     * @param md5 文件md5值
+     * */
+    FileRecordInfo queryFileRecord(String md5);
 
 }

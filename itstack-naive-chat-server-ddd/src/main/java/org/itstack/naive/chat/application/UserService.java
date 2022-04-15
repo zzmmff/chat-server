@@ -117,4 +117,18 @@ public interface UserService {
      */
     List<String> queryTalkBoxGroupsIdList(String userId);
 
+
+    /**
+     *  异步添加文件记录
+     * @param fileRecordInfo 文件记录
+     * */
+    void asyncAppendFileRecord(FileRecordInfo fileRecordInfo);
+
+
+    /**
+     *  查询文件记录
+     * @param md5 文件md5值
+     * */
+    FileRecordInfo queryFileRecord(String md5);
+
 }

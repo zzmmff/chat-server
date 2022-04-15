@@ -1,5 +1,7 @@
 package org.itstack.naive.chat.protocol;
 
+import org.itstack.naive.chat.protocol.file.DownLoadFileRequest;
+import org.itstack.naive.chat.protocol.file.FileTransferProtocol;
 import org.itstack.naive.chat.protocol.friend.AddFriendRequest;
 import org.itstack.naive.chat.protocol.friend.AddFriendResponse;
 import org.itstack.naive.chat.protocol.friend.SearchFriendRequest;
@@ -40,6 +42,8 @@ public abstract class Packet {
         packetType.put(Command.MsgGroupRequest, MsgGroupRequest.class);
         packetType.put(Command.MsgGroupResponse, MsgGroupResponse.class);
         packetType.put(Command.ReconnectRequest, ReconnectRequest.class);
+        packetType.put(Command.FileTransfer, FileTransferProtocol.class);
+        packetType.put(Command.DownLoadFile, DownLoadFileRequest.class);
     }
 
     public static Class<? extends Packet> get(Byte command) {

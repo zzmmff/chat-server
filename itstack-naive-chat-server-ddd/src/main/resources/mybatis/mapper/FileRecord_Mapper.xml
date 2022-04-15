@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.itstack.naive.chat.infrastructure.dao.IFileRecordDao">
+   <insert id="appendFileRecord" parameterType="org.itstack.naive.chat.infrastructure.po.FileRecord">
+       INSERT INTO file_record
+        ( userId,friendId,fileMD5,clientFilePath,filePath,fileSize,creatDate,updateDate,isDelete )
+        VALUES
+        (#{userId},#{friendId},#{fileMD5},#{clientFilePath},#{filePath},#{fileSize},now(),now(),#{isDelete})
+   </insert>
+
+    <select id="queryFileRecord" parameterType="java.lang.String" resultType="org.itstack.naive.chat.infrastructure.po.FileRecord">
+    SELECT userId,friendId,fileMD5,clientFilePath,filePath,fileSize
+    FROM file_record
+    WHERE isDelete = 0 AND (fileMD5 = #{md5})
+    </select>
+</mapper>

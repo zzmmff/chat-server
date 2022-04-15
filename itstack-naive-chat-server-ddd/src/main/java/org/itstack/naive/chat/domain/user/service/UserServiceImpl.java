@@ -95,4 +95,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.queryTalkBoxGroupsIdList(userId);
     }
 
+    @Override
+    public void asyncAppendFileRecord(FileRecordInfo fileRecordInfo) {
+        taskExecutor.execute(() -> userRepository.appendFileRecord(fileRecordInfo));
+    }
+
+    @Override
+    public FileRecordInfo queryFileRecord(String md5) {
+        return userRepository.queryFileRecord(md5);
+    }
+
 }

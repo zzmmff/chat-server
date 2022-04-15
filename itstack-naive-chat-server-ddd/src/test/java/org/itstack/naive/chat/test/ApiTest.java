@@ -5,6 +5,7 @@ import org.itstack.naive.chat.Application;
 import org.itstack.naive.chat.application.UserService;
 import org.itstack.naive.chat.domain.user.model.ChatRecordInfo;
 import org.itstack.naive.chat.infrastructure.common.Constants;
+import org.itstack.naive.chat.infrastructure.dao.IFileRecordDao;
 import org.itstack.naive.chat.infrastructure.dao.IUserDao;
 import org.itstack.naive.chat.infrastructure.dao.IUserFriendDao;
 import org.itstack.naive.chat.infrastructure.po.User;
@@ -35,6 +36,8 @@ public class ApiTest {
     private IUserFriendDao userFriendDao;
     @Autowired
     private UserService userService;
+    @Autowired
+    private IFileRecordDao iFileRecordDao;
 
     @Test
     public void test_queryFuzzyUserList() {
@@ -62,6 +65,10 @@ public class ApiTest {
         Thread.sleep(10000);
     }
 
+    @Test
+    public void testQueryFileRecord(){
+        System.out.println(JSON.toJSONString(iFileRecordDao.queryFileRecord("76bcd2bdbd3da7faef6641c99a65100d")));
+    }
 
 }
 

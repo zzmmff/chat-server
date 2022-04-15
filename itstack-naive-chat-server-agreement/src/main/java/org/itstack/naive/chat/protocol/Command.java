@@ -26,4 +26,7 @@ public interface Command {
 
     Byte ReconnectRequest = 14;
 
+    Byte FileTransfer = 15;
+    Byte DownLoadFile = 16;
+
 }

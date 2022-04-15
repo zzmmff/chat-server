@@ -28,7 +28,7 @@ public abstract class MyBizHandler<T> extends SimpleChannelInboundHandler<T> {
     }
 
     //抽象
-    public abstract void channelRead(Channel channel, T msg);
+    public abstract void channelRead(Channel channel, T msg) throws Exception;
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
